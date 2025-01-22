@@ -28,15 +28,14 @@ appsConfig.forEach((appConfig) => {
     console.warn(`Build path for ${route} does not exist: ${buildPath}`);
   }
 });
+/** home page handler */
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../assets/homePage.html'));
+});
 
 /** 404 handler */
 app.all('*', (req, res) => {
   res.status(404).sendFile(path.join(__dirname, '../assets/404.html'));
-});
-
-/** home page handler */
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../assets/homePage.html'));
 });
 
 app.listen(PORT, () => {
