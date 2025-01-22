@@ -1,11 +1,10 @@
 [
   {
-    "route": "/app1",
-    "buildPath": "path/to/app1/build"
+    "route": "/nerot",
+    "buildPath": "/home/moshe/appss/hanucka/build"
   },
   {
-    "route": "/app2",
-    "buildPath": "path/to/app2/build"
+    "route": "/ums",
+    "buildPath": "/home/moshe/UMS/build"
   }
-  ]
-  
+]
