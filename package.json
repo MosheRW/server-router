@@ -1,0 +1,34 @@
+{
+  "name": "server-router",
+  "version": "0.0.1",
+  "description": "the main server router. allow to run multiple node express and websites instances simultaneously",
+  "keywords": [
+    "nodejs",
+    "node",
+    "server",
+    "express"
+  ],
+  "homepage": "https://github.com/MosheRW/server-router#readme",
+  "bugs": {
+    "url": "https://github.com/MosheRW/server-router/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MosheRW/server-router.git"
+  },
+  "license": "MIT",
+  "author": "Moshe R Winberg",
+  "type": "commonjs",
+  "main": "server.ts",
+  "scripts": {
+    "start": "node src/server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0"
+  }
+}
