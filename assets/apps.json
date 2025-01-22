@@ -1,0 +1,11 @@
+[
+    {
+      "route": "/app1",
+      "buildPath": "C:\\ReactNative\\UMS\\build"
+    },
+    {
+      "route": "/app2",
+      "buildPath": "/path/to/app2/build"
+    }
+  ]
+  
