@@ -1,22 +1,24 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const cors = require( 'cors');
+require('dotenv');
 
 const app = express();
+app.use(cors());
+
 const PORT = process.env.PORT || 3000;
 
-// Load the apps configuration from JSON
+
+/** Serve static files from  assets/apps.json */
 const appsConfig = require('../assets/apps.json');
 
-// Serve each React app based on the configuration
 appsConfig.forEach((appConfig) => {
   const { route, buildPath } = appConfig;
 
   if (fs.existsSync(buildPath)) {
-    // Serve the static files for the React app
     app.use(route, express.static(buildPath));
 
-    // Catch-all handler to serve the React app for any route under this path
     app.get(`${route}/*`, (req, res) => {
       res.sendFile(path.join(buildPath, 'index.html'));
     });
@@ -25,6 +27,15 @@ appsConfig.forEach((appConfig) => {
   } else {
     console.warn(`Build path for ${route} does not exist: ${buildPath}`);
   }
+});
+/** home page handler */
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../assets/homePage.html'));
+});
+
+/** 404 handler */
+app.all('*', (req, res) => {
+  res.status(404).sendFile(path.join(__dirname, '../assets/404.html'));
 });
 
 app.listen(PORT, () => {
