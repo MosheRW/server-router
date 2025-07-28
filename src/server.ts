@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const cors = require( 'cors');
+const cors = require('cors');
 require('dotenv');
 
 const app = express();
@@ -12,6 +12,7 @@ const PORT = process.env.PORT || 3000;
 
 /** Serve static files from  assets/apps.json */
 const appsConfig = require('../assets/apps.json');
+const detailsConfig = require('../assets/details.json');
 
 appsConfig.forEach((appConfig) => {
   const { route, buildPath } = appConfig;
@@ -30,7 +31,21 @@ appsConfig.forEach((appConfig) => {
 });
 /** home page handler */
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../assets/homePage.html'));
+
+  const homePage = fs.readFileSync(path.join(__dirname, '../assets/homePage.html'), 'utf8');
+  const homePageWithLinks = homePage
+    .replace('<ul id="list"></ul>',
+      ['<ul id="list">',
+        (appsConfig
+          .filter((appConfig) => appConfig.display)
+          .map((appConfig) => `<li><a href="${appConfig.route}">${appConfig.description}</a></li>`)
+          .join('</br>')),
+        '</ul>'].join(''))
+    .replace('{{title}}', detailsConfig?.title || '')
+    .replace('{{h1}}', detailsConfig?.h1 || '')
+    .replace('{{h2}}', detailsConfig?.h2 || '');
+
+  res.send(homePageWithLinks);
 });
 
 /** 404 handler */
@@ -38,6 +53,12 @@ app.all('*', (req, res) => {
   res.status(404).sendFile(path.join(__dirname, '../assets/404.html'));
 });
 
+app.all('apps.json', (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, '../assets/apps.json'));
+});
+
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
