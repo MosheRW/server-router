@@ -132,4 +132,5 @@ dist
 
 
 # assets folder
-assets/
+assets/apps.json
+assets/details.json

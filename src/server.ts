@@ -43,7 +43,9 @@ app.get('/', (req, res) => {
         '</ul>'].join(''))
     .replace('{{title}}', detailsConfig?.title || '')
     .replace('{{h1}}', detailsConfig?.h1 || '')
-    .replace('{{h2}}', detailsConfig?.h2 || '');
+    .replace('{{h2}}', detailsConfig?.h2 || '')
+    .replace('{{github}}', `"${detailsConfig?.github}"`)
+    .replace('{{linkdin}}', `"${detailsConfig?.linkdin}"`);
 
   res.send(homePageWithLinks);
 });
@@ -53,9 +55,9 @@ app.all('*', (req, res) => {
   const page404 = fs.readFileSync(path.join(__dirname, '../assets/homePage.html'), 'utf8');
   const page404WithLinks = page404
     .replace('{{webName}}', detailsConfig?.webName)
-    .replace('{{webPath}}', req.url)
-    .replace('{{github}}', detailsConfig?.github)
-    .replace('{{linkdin}}', detailsConfig?.linkdin);
+    .replace('{{webPath}}', `"${req.url}"`)
+    .replace('{{github}}', `"${detailsConfig?.github}"`)
+    .replace('{{linkdin}}', `"${detailsConfig?.linkdin}"`);
 
   res.status(404).send(page404WithLinks);
 });
