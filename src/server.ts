@@ -50,7 +50,14 @@ app.get('/', (req, res) => {
 
 /** 404 handler */
 app.all('*', (req, res) => {
-  res.status(404).sendFile(path.join(__dirname, '../assets/404.html'));
+  const page404 = fs.readFileSync(path.join(__dirname, '../assets/homePage.html'), 'utf8');
+  const page404WithLinks = page404
+    .replace('{{webName}}', detailsConfig?.webName)
+    .replace('{{webPath}}', req.url)
+    .replace('{{github}}', detailsConfig?.github)
+    .replace('{{linkdin}}', detailsConfig?.linkdin);
+
+  res.status(404).send(page404WithLinks);
 });
 
 app.all('apps.json', (req, res) => {
